@@ -1,5 +1,4 @@
-#MyPy
-MongoDB integration with Excel using Python
+#MongoDB integration with Excel using Python
 
 + Problem Statement:
 
