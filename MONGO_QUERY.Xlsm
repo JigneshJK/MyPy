@@ -4,10 +4,10 @@
 Public Function MONGO_QUERY(THISCOMPONENT, Optional MongoQueryName = -1)
 
 '--Main module name--
-pymodule = "DATassure_Pyintegration"
+pymodule = "My_Pyintegration"
 
 '--Get mongo query name--
-qry_nm = THISCOMPONENT("MongoQueryName")
+qry_nm = "get_abc_msg"
 
 Dim fso As New FileSystemObject, binaryFilePath As String
 
