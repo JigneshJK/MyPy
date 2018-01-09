@@ -8,7 +8,7 @@ import xlwings as xw
 import pdb
 
 #--Import all Mongoquery files--
-from DB_QUERY.RegReport.Python.DP.abc_qry import *
+from DB_QUERY.RegReport.Python.abc_qry import *
 
 @xw.func
 def exe_qry(con,ts_folder,qry_nm,db_nm,params):
@@ -39,16 +39,12 @@ def exe_qry(con,ts_folder,qry_nm,db_nm,params):
 
                 #--Execute Mongo Query--
                                 
-                #--get_mg_msg --       
-                if qry_nm == "get_mg_msg":       
+                      
+                if qry_nm == "get_abc_msg":       
                         cursor,result = get_abc_msg(client,db_nm,dict)
                         #pdb.set_trace()  
                         print (result)
                         
-
-                #--if GenTime > DropTime--
-                if result == "false":
-                        raise Exception('No Deal found for given paramdeters')
 
                 else:
 
