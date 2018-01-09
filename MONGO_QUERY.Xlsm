@@ -1,0 +1,64 @@
+'VBA Macro Code:
+
+'--Jignesh : 30-12-2017 : VBA <> XLWING <> Panda <> Python <> PyMongo <> MongoDB
+Public Function MONGO_QUERY(THISCOMPONENT, Optional MongoQueryName = -1)
+
+'--Main module name--
+pymodule = "DATassure_Pyintegration"
+
+'--Get mongo query name--
+qry_nm = THISCOMPONENT("MongoQueryName")
+
+Dim fso As New FileSystemObject, binaryFilePath As String
+
+'--Exceptios--
+pymodpath = ThisWorkbook.Path + "\" + pymodule + ".py"
+py_path = Dir(pymodpath)
+
+   
+'--Get all params--
+Dim params As String
+retVal = ""
+
+params = "{"
+For Each key In TEMP_COLUMN_TRACEKER_DIC.Keys
+    If TEMP_COLUMN_TRACEKER_DIC(key) > 17 Then
+        params = params + key
+        ' Params = -- <Get Value for this temp columns from provided sheet (key, retVal)>
+        params = params & "::" & retVal & "@@"
+        'Debug.Print params
+    End If
+Next
+params = Replace(params, "#", "")
+params = Left(params, Len(params) - 2)
+params = params + "}"
+
+'--Create Data Folder--
+
+If Not fso.FolderExists("<AnyValidPath>\Data\" & qry_nm) Then
+     fso.CreateFolder "<AnyValidPath>\Data\" & qry_nm
+End If
+
+Path = "<AnyValidPath>\Data\" & qry_nm
+
+ts_folder = Replace(Path, "\", "\\")
+
+'--Get connection string--
+con = "<MongoDB Connection String >" '--Or store in some global variable & fetch
+
+'--Get DB Name--
+
+'db_nm = "<DB Name>" '--Or store in some global variable & fetch
+
+
+'--Call Python--
+ RunPython ("import " & pymodule & ";" & pymodule & ".exe_qry('" & con & "','" & ts_folder & "','" & qry_nm & "','" & db_nm & "','" & params & "')")
+
+'--Data file path--
+DataFile = ts_folder + "\\" + qry_nm + ".jason"
+LogFile = ts_folder + "\\" + qry_nm + "_Log.txt"
+
+    
+Next
+
+End Function
